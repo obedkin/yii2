@@ -8,6 +8,7 @@ return [
   'basePath' => dirname(__DIR__),
   'bootstrap' => ['log'],
   'controllerNamespace' => 'frontend\controllers',
+  'defaultRoute' => 'main',
   'modules' => [
     'main' => [
       'class' => 'app\modules\main\Module'
