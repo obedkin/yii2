@@ -15,17 +15,19 @@ return [
   ],
   'components' => [
     'mail' => [
-      'class' => 'zyx\phpmailer\Mailer',
-      'viewPath' => '@common/mail',
-      'useFileTransport' => FALSE,
-      'config' => [
-        'mailer' => 'smtp',
-        'host' => 'smtp.yandex.ru',
-        'port' => '465',
+      'class'            => 'zyx\phpmailer\Mailer',
+      'viewPath'         => '@common/mail',
+      'useFileTransport' => false,
+      'config'           => [
+        'mailer'     => 'smtp',
+        'host'       => 'smtp.yandex.ru',
+        'port'       => '465',
         'smtpsecure' => 'ssl',
-        'smtpauth' => TRUE,
-        'username' => '',
-        'password' => '',
+        'smtpauth'   => true,
+        'username'   => 'yii2.school@yandex.ru',
+        'password'   => '540320',
+        'ishtml' => true,
+        'charset' => 'UTF-8',
       ],
     ],
     'common' => [
