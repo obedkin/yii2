@@ -22,6 +22,7 @@ class DefaultController extends Controller
         print $cache->get("test");
     }
 
+    // Пример события
     public function actionEvent()
     {
 
