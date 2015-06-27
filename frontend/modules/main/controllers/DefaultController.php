@@ -13,27 +13,27 @@ class DefaultController extends Controller
         return $this->render('index');
     }
 
-    public function actionService(){
-
+    // Пример сервис-локатора
+    public function actionService()
+    {
         $locator = \Yii::$app->locator;
         $cache = $locator->cache;
-
-        $cache->set("test",1);
-
+        $cache->set("test", 1);
         print $cache->get("test");
-
     }
 
-    public function actionEvent(){
+    public function actionEvent()
+    {
 
         $component = \Yii::$app->common; //new Common();
-        $component->on(Common::EVENT_NOTIFY,[$component,'notifyAdmin']);
-        $component->sendMail("test@domain.com","Test","Test text");
-        $component->off(Common::EVENT_NOTIFY,[$component,'notifyAdmin']);
+        $component->on(Common::EVENT_NOTIFY, [$component, 'notifyAdmin']);
+        $component->sendMail("test@domain.com", "Test", "Test text");
+        $component->off(Common::EVENT_NOTIFY, [$component, 'notifyAdmin']);
 
     }
 
-    public function actionPath(){
+    public function actionPath()
+    {
         // @yii
         // @app
         //@runtime
@@ -46,7 +46,6 @@ class DefaultController extends Controller
         // @backend
 
         print \Yii::getAlias('@test');
-
 
 
     }
