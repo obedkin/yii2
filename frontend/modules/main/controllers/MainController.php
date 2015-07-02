@@ -30,17 +30,18 @@ class MainController extends \yii\web\Controller
     public function actionRegister()
     {
         $model = new SignupForm();
-        //$model->scenario = 'short_register';
 
         if(\Yii::$app->request->isAjax && \Yii::$app->request->isPost){
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+            if($model->load(\Yii::$app->request->post())) {
+                \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
         }
 
-        if ($model->load($_POST) && $model->signup()){
-            print_r ($model->getAttributes());
-            die;
+        if($model->load(\Yii::$app->request->post()) && $model->signup()){
+            \Yii::$app->session->setFlash('success', 'Register Success');
         }
+
         return $this->render('register',['model'=>$model]);
     }
 
