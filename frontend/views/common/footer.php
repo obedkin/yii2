@@ -19,12 +19,12 @@
                 <h4>Newsletter</h4>
                 <p>Get notified about the latest properties in our marketplace.</p>
 
-                <?php echo \yii\helpers\Html::beginForm('','post', ['class' => 'form-inline']) ?>
-                <?php echo \yii\helpers\Html::textInput('search', '', ['class' => 'form-control', 'placeholder' => 'Enter Your email address']) ?>
+                 <?php echo \yii\helpers\Html::beginForm('','post', ['class' => 'form-inline']) ?>
+                 <?php echo \yii\helpers\Html::textInput('search', '', ['class' => 'form-control', 'placeholder' => 'Enter Your email address']) ?>
 
-                <?php echo \yii\helpers\Html::submitButton('Notify Me!', ['class' => 'btn btn-success']) ?>
+                 <?php echo \yii\helpers\Html::submitButton('Notify Me!', ['class' => 'btn btn-success']) ?>
 
-                <?php echo \yii\helpers\Html::endForm() ?>
+                 <?php echo \yii\helpers\Html::endForm() ?>
             </div>
 
             <div class="col-lg-3 col-sm-3">

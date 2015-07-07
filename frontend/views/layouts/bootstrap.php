@@ -1,9 +1,8 @@
-<?php
+<?
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 \frontend\assets\MainAsset::register($this);
 ?>
-
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,11 +18,12 @@ use yii\bootstrap\Nav;
 <body>
 <?php $this->beginBody() ?>
 
-<?php if(Yii::$app->session->hasFlash('success')): ?>
 
-    <?=Yii::$app->session->getFlash('success') ?>
-<?php
-endif;
+ <?php if(Yii::$app->session->hasFlash('success')): ?>
+
+        <?=Yii::$app->session->getFlash('success') ?>
+<?
+ endif;
 ?>
 
 <?=$this->render("//common/head") ?>

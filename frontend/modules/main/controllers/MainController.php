@@ -5,21 +5,23 @@ use common\models\LoginForm;
 use frontend\models\ContactForm;
 use frontend\models\Image;
 use frontend\models\SignupForm;
-use yii\base\Response;
-use yii\bootstrap\ActiveForm;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class MainController extends \yii\web\Controller
 {
-    public $layout = 'inner';
+    public $layout = "inner";
 
     public function actions()
     {
         return [
-
-          'captcha' => [
-            'class' => 'yii\captcha\CaptchaAction',
-            'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-          ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'test' => [
+                'class' => 'frontend\actions\TestAction',
+            ]
         ];
     }
 
@@ -28,22 +30,23 @@ class MainController extends \yii\web\Controller
         return $this->render('index');
     }
 
-    public function actionRegister()
-    {
+    public function actionRegister(){
+
         $model = new SignupForm();
 
         if(\Yii::$app->request->isAjax && \Yii::$app->request->isPost){
             if($model->load(\Yii::$app->request->post())) {
-                \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             }
         }
 
         if($model->load(\Yii::$app->request->post()) && $model->signup()){
+
             \Yii::$app->session->setFlash('success', 'Register Success');
         }
 
-        return $this->render('register',['model'=>$model]);
+        return $this->render("register",['model' => $model]);
     }
 
     public function actionLogin(){
@@ -65,14 +68,18 @@ class MainController extends \yii\web\Controller
 
     public function actionContact(){
 
-        $model =  new ContactForm();
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()){
-            \Yii::$app->common->sendMail($model->subject,$model->body);
-            print_r ('success');
+        $model = new ContactForm();
+        if($model->load(\Yii::$app->request->post()) && $model->validate()){
+            $body = " <div>Body: <b> ".$model->body." </b></div>";
+            $body .= " <div>Email: <b> ".$model->email." </b></div>";
+
+            \Yii::$app->common->sendMail($model->subject,$body);
+
+            print "Send success";
             die;
         }
 
-        return $this->render('contact',['model'=>$model]);
+        return $this->render("contact", ['model' => $model]);
     }
 
 }

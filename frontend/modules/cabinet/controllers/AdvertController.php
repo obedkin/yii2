@@ -8,11 +8,13 @@ use common\models\Advert;
 use common\models\Search\AdvertSearch;
 use yii\helpers\BaseFileHelper;
 use yii\helpers\Url;
-use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use Imagine\Image\Point;
+use yii\imagine\Image;
+use Imagine\Image\Box;
 
 /**
  * AdvertController implements the CRUD actions for Advert model.
@@ -20,6 +22,7 @@ use yii\web\UploadedFile;
 class AdvertController extends AuthController
 {
 
+    public $layout = "inner";
 
     /**
      * Lists all Advert models.
@@ -48,6 +51,67 @@ class AdvertController extends AuthController
         ]);
     }
 
+    public function actionFileUploadGeneral(){
+
+        if(Yii::$app->request->isPost){
+            $id = Yii::$app->request->post("advert_id");
+            $path = Yii::getAlias("@frontend/web/uploads/adverts/".$id."/general");
+            BaseFileHelper::createDirectory($path);
+            $model = Advert::findOne($id);
+            $model->scenario = 'step2';
+
+            $file = UploadedFile::getInstance($model,'general_image');
+            $name = 'general.'.$file->extension;
+            $file->saveAs($path .DIRECTORY_SEPARATOR .$name);
+
+            $image  = $path .DIRECTORY_SEPARATOR .$name;
+            $new_name = $path .DIRECTORY_SEPARATOR."small_".$name;
+
+            $model->general_image = $name;
+            $model->save();
+
+            $size = getimagesize($image);
+            $width = $size[0];
+            $height = $size[1];
+
+            Image::frame($image, 0, '666', 0)
+                ->crop(new Point(0, 0), new Box($width, $height))
+                ->resize(new Box(1000,644))
+                ->save($new_name, ['quality' => 100]);
+
+            return true;
+
+        }
+    }
+
+
+    public function actionFileUploadImages(){
+        if(Yii::$app->request->isPost){
+            $id = Yii::$app->request->post("advert_id");
+            $path = Yii::getAlias("@frontend/web/uploads/adverts/".$id);
+            BaseFileHelper::createDirectory($path);
+            $file = UploadedFile::getInstanceByName('images');
+            $name = time().'.'.$file->extension;
+            $file->saveAs($path .DIRECTORY_SEPARATOR .$name);
+
+            $image = $path .DIRECTORY_SEPARATOR .$name;
+            $new_name = $path .DIRECTORY_SEPARATOR."small_".$name;
+
+            $size = getimagesize($image);
+            $width = $size[0];
+            $height = $size[1];
+
+            Image::frame($image, 0, '666', 0)
+                ->crop(new Point(0, 0), new Box($width, $height))
+                ->resize(new Box(1000,644))
+                ->save($new_name, ['quality' => 100]);
+
+            sleep(1);
+            return true;
+
+        }
+    }
+
     /**
      * Creates a new Advert model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -61,7 +125,7 @@ class AdvertController extends AuthController
             return $this->redirect(['step2']);
         } else {
             return $this->render('create', [
-              'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -76,41 +140,13 @@ class AdvertController extends AuthController
     {
         $model = $this->findModel($id);
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idadvert]);
+            return $this->redirect(['step2']);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Advert model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Advert model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Advert the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Advert::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
@@ -146,65 +182,32 @@ class AdvertController extends AuthController
         return $this->render("step2",['model' => $model,'image' => $image, 'images_add' => $images_add]);
     }
 
-    public function actionFileUploadGeneral(){
+    /**
+     * Deletes an existing Advert model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
 
-        if(Yii::$app->request->isPost){
-            $id = Yii::$app->request->post("advert_id");
-            $path = Yii::getAlias("@frontend/web/uploads/adverts/".$id."/general");
-            BaseFileHelper::createDirectory($path);
-            $model = Advert::findOne($id);
-            $model->scenario = 'step2';
-
-            $file = UploadedFile::getInstance($model,'general_image');
-            $name = 'general.'.$file->extension;
-            $file->saveAs($path .DIRECTORY_SEPARATOR .$name);
-
-            $image  = $path .DIRECTORY_SEPARATOR .$name;
-            $new_name = $path .DIRECTORY_SEPARATOR."small_".$name;
-
-            $model->general_image = $name;
-            $model->save();
-
-            $size = getimagesize($image);
-            $width = $size[0];
-            $height = $size[1];
-
-            Image::frame($image, 0, '666', 0)
-              ->crop(new Point(0, 0), new Box($width, $height))
-              ->resize(new Box(1000,644))
-              ->save($new_name, ['quality' => 100]);
-
-            return true;
-
-        }
+        return $this->redirect(['index']);
     }
 
-
-    public function actionFileUploadImages(){
-        if(Yii::$app->request->isPost){
-            $id = Yii::$app->request->post("advert_id");
-            $path = Yii::getAlias("@frontend/web/uploads/adverts/".$id);
-            BaseFileHelper::createDirectory($path);
-            $file = UploadedFile::getInstanceByName('images');
-            $name = time().'.'.$file->extension;
-            $file->saveAs($path .DIRECTORY_SEPARATOR .$name);
-
-            $image = $path .DIRECTORY_SEPARATOR .$name;
-            $new_name = $path .DIRECTORY_SEPARATOR."small_".$name;
-
-            $size = getimagesize($image);
-            $width = $size[0];
-            $height = $size[1];
-
-            Image::frame($image, 0, '666', 0)
-              ->crop(new Point(0, 0), new Box($width, $height))
-              ->resize(new Box(1000,644))
-              ->save($new_name, ['quality' => 100]);
-
-            sleep(1);
-            return true;
-
+    /**
+     * Finds the Advert model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Advert the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Advert::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
 }

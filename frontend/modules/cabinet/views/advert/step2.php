@@ -1,7 +1,7 @@
 <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
 
     <div class="row">
-        <?php
+        <?
         echo $form->field($model, 'general_image')->widget(\kartik\file\FileInput::classname(),[
             'options' => [
                 'accept' => 'image/*',
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row">
-        <?php
+        <?
         echo \yii\helpers\Html::label('Images');
 
         echo \kartik\file\FileInput::widget([

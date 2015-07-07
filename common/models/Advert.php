@@ -39,7 +39,7 @@ class Advert extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-          TimestampBehavior::className(),
+            TimestampBehavior::className(),
         ];
     }
 
@@ -56,12 +56,12 @@ class Advert extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'fk_agent', 'bedroom', 'livingroom', 'parking', 'kitchen', 'hot', 'sold', 'recommend'], 'integer'],
+            [['price'], 'required'],
+            [['price', 'fk_agent', 'bedroom', 'livingroom', 'parking', 'kitchen', 'hot', 'sold', 'type', 'recommend'], 'integer'],
             [['description'], 'string'],
             [['address'], 'string', 'max' => 255],
-            [['general_image'], 'string', 'max' => 200],
-            [['location'], 'string', 'max' => 30],
-            [['type'], 'string', 'max' => 50]
+            [['location'], 'string', 'max' => 50],
+            //['general_image', 'file', 'extensions' => ['jpg','png','gif']]
         ];
     }
 
@@ -74,7 +74,7 @@ class Advert extends \yii\db\ActiveRecord
             'idadvert' => 'Idadvert',
             'price' => 'Price',
             'address' => 'Address',
-            'fk_agent' => 'Fk Agent',
+            'fk_agent' => 'Fk Agent Detail',
             'bedroom' => 'Bedroom',
             'livingroom' => 'Livingroom',
             'parking' => 'Parking',
@@ -89,15 +89,6 @@ class Advert extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return AdverQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new AdverQuery(get_called_class());
     }
 
     public function getUser(){
@@ -117,5 +108,14 @@ class Advert extends \yii\db\ActiveRecord
 
     public function afterSave(){
         Yii::$app->locator->cache->set('id',$this->idadvert);
+    }
+
+    /**
+     * @inheritdoc
+     * @return AdvertQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new AdvertQuery(get_called_class());
     }
 }

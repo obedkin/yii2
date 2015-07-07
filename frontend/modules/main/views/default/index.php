@@ -5,78 +5,50 @@
 
         <div class="sl-slider">
 
+            <?php
+            foreach($result_general as $row):
+            ?>
             <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
                 <div class="sl-slide-inner">
-                    <div class="bg-img bg-img-1"></div>
-                    <h2><a href="#">2 Bed Rooms and 1 Dinning Room Aparment on Sale</a></h2>
-                    <blockquote>
-                        <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                        <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                        <cite>$ 20,000,000</cite>
-                    </blockquote>
-                </div>
+                    <div class="bg-img" style="background-image: url('<?=\frontend\components\Common::getImageAdvert($row)[0] ?>')")"></div>
+                <h2><a href="#"><?=\frontend\components\Common::getTitleAdvert($row) ?></a></h2>
+                <blockquote>
+                    <p class="location"><span class="glyphicon glyphicon-map-marker"></span> <?=$row['address'] ?></p>
+                    <p><?=\frontend\components\Common::substr($row['description']) ?></p>
+                    <cite>$ <?=$row['price'] ?></cite>
+                </blockquote>
+            </div>
             </div>
 
-            <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
-                <div class="sl-slide-inner">
-                    <div class="bg-img bg-img-2"></div>
-                    <h2><a href="#">2 Bed Rooms and 1 Dinning Room Aparment on Sale</a></h2>
-                    <blockquote>
-                        <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                        <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                        <cite>$ 20,000,000</cite>
-                    </blockquote>
-                </div>
-            </div>
+        <?php
+        endforeach;
+        ?>
 
-            <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
-                <div class="sl-slide-inner">
-                    <div class="bg-img bg-img-3"></div>
-                    <h2><a href="#">2 Bed Rooms and 1 Dinning Room Aparment on Sale</a></h2>
-                    <blockquote>
-                        <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                        <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                        <cite>$ 20,000,000</cite>
-                    </blockquote>
-                </div>
-            </div>
-
-            <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
-                <div class="sl-slide-inner">
-                    <div class="bg-img bg-img-4"></div>
-                    <h2><a href="#">2 Bed Rooms and 1 Dinning Room Aparment on Sale</a></h2>
-                    <blockquote>
-                        <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                        <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                        <cite>$ 20,000,000</cite>
-                    </blockquote>
-                </div>
-            </div>
-
-            <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1">
-                <div class="sl-slide-inner">
-                    <div class="bg-img bg-img-5"></div>
-                    <h2><a href="#">2 Bed Rooms and 1 Dinning Room Aparment on Sale</a></h2>
-                    <blockquote>
-                        <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                        <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                        <cite>$ 20,000,000</cite>
-                    </blockquote>
-                </div>
-            </div>
-        </div><!-- /sl-slider -->
+    </div><!-- /sl-slider -->
 
 
 
-        <nav id="nav-dots" class="nav-dots">
+    <nav id="nav-dots" class="nav-dots">
+        <?php
+        if($count_general >= 1):
+            ?>
             <span class="nav-dot-current"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </nav>
+        <?php
+        endif;
+        ?>
 
-    </div><!-- /slider-wrapper -->
+        <?php
+        if($count_general > 1):
+            foreach(range(2,$count_general) as $line):
+                ?>
+                <span></span>
+            <?php
+            endforeach;
+        endif;
+        ?>
+    </nav>
+
+</div><!-- /slider-wrapper -->
 </div>
 
 
@@ -87,9 +59,9 @@
         <h3>Buy, Sale & Rent</h3>
         <div class="searchbar">
             <div class="row">
-                <?php echo \yii\helpers\Html::beginForm() ?>
+                 <?php echo \yii\helpers\Html::beginForm() ?>
                 <div class="col-lg-6 col-sm-6">
-                    <?php echo \yii\helpers\Html::textInput('search', '', ['class' => 'form-control', 'placeholder' => 'Search of Properties']) ?>
+                     <?php echo \yii\helpers\Html::textInput('search', '', ['class' => 'form-control', 'placeholder' => 'Search of Properties']) ?>
                     <div class="row">
                         <div class="col-lg-3 col-sm-3 ">
 
@@ -127,10 +99,10 @@
                             ?>
                         </div>
                         <div class="col-lg-3 col-sm-4">
-                             <?php echo \yii\helpers\Html::submitButton('Find Now', ['class' => 'btn btn-success']) ?>
+                              <?php echo \yii\helpers\Html::submitButton('Find Now', ['class' => 'btn btn-success']) ?>
                         </div>
 
-                        <?php echo \yii\helpers\Html::endForm() ?>
+                         <?php echo \yii\helpers\Html::endForm() ?>
                     </div>
 
 

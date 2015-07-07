@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'address') ?>
 
-    <?= $form->field($model, 'fk_agent') ?>
+    <?= $form->field($model, 'fk_agent_detail') ?>
 
     <?= $form->field($model, 'bedroom') ?>
 
