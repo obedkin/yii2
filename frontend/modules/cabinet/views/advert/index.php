@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'idadvert',
             'price',
             'address',
-            'fk_agent_detail',
+            'fk_agent',
             'bedroom',
             // 'livingroom',
             // 'parking',

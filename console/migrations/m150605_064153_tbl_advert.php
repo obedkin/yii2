@@ -13,7 +13,7 @@ class m150605_064153_tbl_advert extends Migration
       `idadvert` int(11) NOT NULL AUTO_INCREMENT,
       `price` mediumint(11) DEFAULT NULL,
       `address` varchar(255) DEFAULT NULL,
-      `fk_agent_detail` mediumint(11) DEFAULT NULL,
+      `fk_agent` mediumint(11) DEFAULT NULL,
       `bedroom` smallint(1) DEFAULT NULL,
       `livingroom` smallint(1) DEFAULT NULL,
       `parking` smallint(1) DEFAULT NULL,
@@ -34,7 +34,7 @@ class m150605_064153_tbl_advert extends Migration
 
     public function down()
     {
-        $this->dropTable("advert");
+        $this->dropTable("{{%advert}}");
 
         return false;
     }

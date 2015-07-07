@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "advert".
@@ -35,15 +36,28 @@ class Advert extends \yii\db\ActiveRecord
         return 'advert';
     }
 
+    public function behaviors()
+    {
+        return [
+          TimestampBehavior::className(),
+        ];
+    }
+
+    public function scenarios(){
+        $scenarios = parent::scenarios();
+        $scenarios['step2'] = ['general_image'];
+
+        return $scenarios;
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['price', 'fk_agent_detail', 'bedroom', 'livingroom', 'parking', 'kitchen', 'hot', 'sold', 'recommend', 'created_at', 'updated_at'], 'integer'],
+            [['price', 'fk_agent', 'bedroom', 'livingroom', 'parking', 'kitchen', 'hot', 'sold', 'recommend'], 'integer'],
             [['description'], 'string'],
-            [['created_at', 'updated_at'], 'required'],
             [['address'], 'string', 'max' => 255],
             [['general_image'], 'string', 'max' => 200],
             [['location'], 'string', 'max' => 30],
@@ -60,7 +74,7 @@ class Advert extends \yii\db\ActiveRecord
             'idadvert' => 'Idadvert',
             'price' => 'Price',
             'address' => 'Address',
-            'fk_agent_detail' => 'Fk Agent Detail',
+            'fk_agent' => 'Fk Agent',
             'bedroom' => 'Bedroom',
             'livingroom' => 'Livingroom',
             'parking' => 'Parking',
@@ -84,5 +98,24 @@ class Advert extends \yii\db\ActiveRecord
     public static function find()
     {
         return new AdverQuery(get_called_class());
+    }
+
+    public function getUser(){
+        return $this->hasOne(User::className(),['id' => 'fk_agent']);
+    }
+
+    //beforeValidate
+    //afterValidate
+    //beforeSave
+    //afterSave
+    //beforeFind
+    //afterFind
+
+    public function afterValidate(){
+        $this->fk_agent = Yii::$app->user->identity->id;
+    }
+
+    public function afterSave(){
+        Yii::$app->locator->cache->set('id',$this->idadvert);
     }
 }
