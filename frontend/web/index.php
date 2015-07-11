@@ -1,4 +1,6 @@
 <?php
+use yii\di\ServiceLocator;
+
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
@@ -14,7 +16,7 @@ $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../config/main-local.php')
 );
 
-$service = new \yii\di\ServiceLocator();
+$service = new ServiceLocator();
 $service->set("cache",'yii\caching\FileCache');
 
 $application = new yii\web\Application($config);

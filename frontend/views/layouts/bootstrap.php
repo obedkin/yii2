@@ -1,4 +1,4 @@
-<?
+<?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 \frontend\assets\MainAsset::register($this);
@@ -22,7 +22,7 @@ use yii\bootstrap\Nav;
  <?php if(Yii::$app->session->hasFlash('success')): ?>
 
         <?=Yii::$app->session->getFlash('success') ?>
-<?
+<?php
  endif;
 ?>
 

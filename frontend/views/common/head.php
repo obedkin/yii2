@@ -1,4 +1,4 @@
-<?
+<?php
 use yii\bootstrap\Nav;
 ?>
 <!-- Header Starts -->
@@ -21,7 +21,7 @@ use yii\bootstrap\Nav;
 
             <!-- Nav Starts -->
             <div class="navbar-collapse  collapse">
-                <?
+                <?php
                 $menuItems = [
                     ['label' => 'Home', 'url' => '#'],
                     ['label' => 'About', 'url' => '#'],
@@ -50,7 +50,7 @@ use yii\bootstrap\Nav;
     <!-- Header Starts -->
     <div class="header">
         <a href="index.html" ><img src="/images/logo.png"  alt="Realestate"></a>
-        <?
+        <?php
         $menuItems = [
             ['label' => 'Buy', 'url' => '#'],
             ['label' => 'Sale', 'url' => '#'],

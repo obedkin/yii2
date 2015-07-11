@@ -61,7 +61,7 @@ class Advert extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['address'], 'string', 'max' => 255],
             [['location'], 'string', 'max' => 50],
-            //['general_image', 'file', 'extensions' => ['jpg','png','gif']]
+            ['general_image', 'file', 'extensions' => ['jpg','png','gif']]
         ];
     }
 

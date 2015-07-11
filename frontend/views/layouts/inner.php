@@ -1,10 +1,10 @@
-<?
+<?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 
 \frontend\assets\MainAsset::register($this);
 ?>
-<?
+<?php
   $this->beginPage();
 ?>
 <!DOCTYPE html>
@@ -18,13 +18,13 @@ use yii\bootstrap\Nav;
 
 <body>
 
-<?
+<?php
  $this->beginBody();
 ?>
 
  <?php if(Yii::$app->session->hasFlash('success')): ?>
 
-    <?
+    <?php
      $success = Yii::$app->session->getFlash('success');
 
       echo \yii\bootstrap\Alert::widget([
@@ -34,7 +34,7 @@ use yii\bootstrap\Nav;
           'body' => $success
       ])
     ?>
-<?
+<?php
 endif;
 ?>
 
@@ -61,7 +61,7 @@ endif;
 
          <?php echo $this->render("//common/footer") ?>
 
-<?
+<?php
 $this->endBody();
 ?>
 
@@ -69,7 +69,7 @@ $this->endBody();
 </body>
 </html>
 
-<?
+<?php
 $this->endPage();
 ?>
 

@@ -1,7 +1,7 @@
 <div class="row contact">
     <div class="col-lg-6 col-sm-6">
 
-        <?
+        <?php
         $form = \yii\bootstrap\ActiveForm::begin();
         ?>
 
@@ -16,7 +16,7 @@
 
 
         <?=\yii\helpers\Html::submitButton('Send',['class' => 'btn btn-success']) ?>
-        <?
+        <?php
         \yii\bootstrap\ActiveForm::end();
         ?>
 
