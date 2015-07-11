@@ -4,6 +4,7 @@ namespace app\modules\main\controllers;
 
 use common\models\Advert;
 use common\models\LoginForm;
+use frontend\filters\FilterAdvert;
 use frontend\models\ContactForm;
 use frontend\models\Image;
 use frontend\models\SignupForm;
@@ -25,6 +26,15 @@ class MainController extends \yii\web\Controller
             'test' => [
                 'class' => 'frontend\actions\TestAction',
             ]
+        ];
+    }
+
+    public function behaviors(){
+        return [
+          [
+            'only' => ['view-advert'],
+            'class' => FilterAdvert::className(),
+          ]
         ];
     }
 
