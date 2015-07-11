@@ -1,3 +1,10 @@
+
+<?php
+if(Yii::$app->user->isGuest) {
+    echo \frontend\widgets\Login::widget();
+}
+?>
+
 <div class="footer">
 
     <div class="container">
