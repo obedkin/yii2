@@ -49,13 +49,17 @@ use yii\bootstrap\Nav;
 
     <!-- Header Starts -->
     <div class="header">
-        <a href="index.html" ><img src="/images/logo.png"  alt="Realestate"></a>
+        <a href="index.html" ><img src="images/logo.png"  alt="Realestate"></a>
         <?php
-        $menuItems = [
-            ['label' => 'Buy', 'url' => '#'],
-            ['label' => 'Sale', 'url' => '#'],
-            ['label' => 'Rent', 'url' => '#'],
-        ];
+        $menuItems = [];
+        $guest = Yii::$app->user->isGuest;
+        if($guest) {
+            $menuItems[] =  ['label' => 'Login', 'url' => '#', 'linkOptions' => ['data-target' => '#loginpop', 'data-toggle' => "modal"]];
+        }
+        else{
+            $menuItems[] =  ['label' => 'Manager adverts', 'url' => ['/cabinet/advert']];
+            $menuItems[] = ['label' => 'Logout',  'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        }
         echo Nav::widget([
             'options' => ['class' => 'pull-right'],
             'items' => $menuItems,
