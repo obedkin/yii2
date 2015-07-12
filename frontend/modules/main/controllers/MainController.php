@@ -10,6 +10,7 @@ use frontend\models\ContactForm;
 use frontend\models\Image;
 use frontend\models\SignupForm;
 use yii\base\DynamicModel;
+use yii\data\Pagination;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -84,6 +85,38 @@ class MainController extends \yii\web\Controller
         \Yii::$app->user->logout();
         return $this->goHome();
     }
+
+
+  public function actionFind($propert='',$price='',$apartment = ''){
+
+    $this->layout = 'sell';
+
+    $query = Advert::find();
+    $query->filterWhere(['like', 'address', $propert])
+      ->orFilterWhere(['like', 'description', $propert])
+      ->andFilterWhere(['type' => $apartment]);
+
+    if($price){
+      $prices = explode("-",$price);
+
+      if(isset($prices[0]) && isset($prices[1])) {
+        $query->andWhere(['between', 'price', $prices[0], $prices[1]]);
+      }
+      else{
+        $query->andWhere(['>=', 'price', $prices[0]]);
+      }
+    }
+
+    $countQuery = clone $query;
+    $pages = new Pagination(['totalCount' => $countQuery->count()]);
+    $pages->setPageSize(1);
+
+    $model = $query->offset($pages->offset)->limit($pages->limit)->all();
+
+    $request = \Yii::$app->request;
+    return $this->render("find", ['model' => $model, 'pages' => $pages, 'request' => $request]);
+
+  }
 
     public function actionContact(){
 

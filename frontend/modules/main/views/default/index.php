@@ -60,19 +60,16 @@ use yii\helpers\Html;
         <h3>Buy, Sale & Rent</h3>
         <div class="searchbar">
             <div class="row">
-                <?=Html::beginForm() ?>
+                <?=Html::beginForm(\yii\helpers\Url::to('main/main/find/'),'get') ?>
                 <div class="col-lg-6 col-sm-6">
                     <?=Html::textInput('propert', '', ['class' => 'form-control']) ?>
                     <div class="row">
-                        <div class="col-lg-3 col-sm-3 ">
-                            <?=Html::dropDownList('type', '',['Buy', 'Rent', 'Sale'],['class' => 'form-control']) ?>
-                        </div>
                         <div class="col-lg-3 col-sm-4">
                             <?=Html::dropDownList('price', '',[
-                              '$150,000 - $200,000',
-                              '$200,000 - $250,000',
-                              '$250,000 - $300,000',
-                              '$300,000 - above',
+                              '150000-200000' => '$150,000 - $200,000',
+                              '200000-250000' => '$200,000 - $250,000',
+                              '250000-300000' => '$250,000 - $300,000',
+                              '300000' =>'$300,000 - above',
                             ],['class' => 'form-control', 'prompt' => 'Price']) ?>
                         </div>
                         <div class="col-lg-3 col-sm-4">
