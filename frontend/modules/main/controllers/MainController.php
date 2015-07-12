@@ -4,6 +4,7 @@ namespace app\modules\main\controllers;
 
 use common\models\Advert;
 use common\models\LoginForm;
+use frontend\components\Common;
 use frontend\filters\FilterAdvert;
 use frontend\models\ContactForm;
 use frontend\models\Image;
@@ -11,6 +12,11 @@ use frontend\models\SignupForm;
 use yii\base\DynamicModel;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+
+use dosamigos\google\maps\LatLng;
+use dosamigos\google\maps\Map;
+use dosamigos\google\maps\overlays\Marker;
+
 
 class MainController extends \yii\web\Controller
 {
@@ -125,13 +131,30 @@ class MainController extends \yii\web\Controller
             $current_user['username'] = \Yii::$app->user->identity->username;
 
         }
+        $coords = str_replace(['(',')'],'',$model->location);
+        $coords = explode(',',$coords);
+
+        $coord = new LatLng(['lat' => $coords[0], 'lng' => $coords[1]]);
+        $map = new Map([
+          'center' => $coord,
+          'zoom' => 20,
+        ]);
+
+        $marker = new Marker([
+          'position' => $coord,
+          'title' => Common::getTitleAdvert($model),
+        ]);
+
+        $map->addOverlay($marker);
+
 
         return $this->render('view_advert',[
           'model' => $model,
           'model_feedback' => $model_feedback,
           'user' => $user,
           'images' =>$images,
-          'current_user' => $current_user
+          'current_user' => $current_user,
+          'map' => $map
         ]);
 
     }

@@ -24,6 +24,12 @@ class AdvertController extends AuthController
 
     public $layout = "inner";
 
+
+    public function init(){
+        Yii::$app->view->registerJsFile('http://maps.googleapis.com/maps/api/js?sensor=false',['position' => \yii\web\View::POS_HEAD]);
+    }
+
+
     /**
      * Lists all Advert models.
      * @return mixed
