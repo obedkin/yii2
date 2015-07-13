@@ -58,6 +58,8 @@ use yii\bootstrap\Nav;
         }
         else{
             $menuItems[] =  ['label' => 'Manager adverts', 'url' => ['/cabinet/advert']];
+            $menuItems[] =  ['label' => 'Settings', 'url' => ['/cabinet/default/settings']];
+            $menuItems[] =  ['label' => 'Change Password', 'url' => ['/cabinet/default/change-password']];
             $menuItems[] = ['label' => 'Logout',  'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         }
         echo Nav::widget([

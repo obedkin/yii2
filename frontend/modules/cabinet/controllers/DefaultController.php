@@ -3,6 +3,7 @@
 namespace app\modules\cabinet\controllers;
 
 use common\models\User;
+use frontend\models\ChangePasswordForm;
 use Imagine\Image\Box;
 use Yii;
 use yii\imagine\Image;
