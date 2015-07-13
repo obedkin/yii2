@@ -23,15 +23,16 @@ use yii\bootstrap\Nav;
             <div class="navbar-collapse  collapse">
                 <?php
                 $menuItems = [
-                    ['label' => 'Home', 'url' => '#'],
-                    ['label' => 'About', 'url' => '#'],
-                    ['label' => 'Contact', 'url' => '#'],
+                  ['label' => 'Home', 'url' => '/'],
+                  ['label' => 'About', 'url' => ['/main/main/page', 'view' => 'about']],
+                  ['label' => 'Contact', 'url' => ['/main/main/page', 'view' => 'contact']],
                 ];
                 echo Nav::widget([
-                    'options' => ['class' => 'navbar-nav navbar-right'],
-                    'items' => $menuItems,
+                  'options' => ['class' => 'navbar-nav navbar-right'],
+                  'items' => $menuItems,
                 ]);
                 ?>
+
             </div>
             <!-- #Nav Ends -->
 
