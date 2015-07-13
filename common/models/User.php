@@ -185,4 +185,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+
+    public function scenarios(){
+        $scenarios = parent::scenarios();
+        $scenarios['setting'] = ['username', 'email'];
+
+        return $scenarios;
+    }
 }
