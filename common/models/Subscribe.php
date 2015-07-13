@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use frontend\components\Common;
 use Yii;
 
 /**
@@ -13,6 +14,7 @@ use Yii;
  */
 class Subscribe extends \yii\db\ActiveRecord
 {
+  const EVENT_NOTIFICATION_ADMIN = 'new-notification-admin';
     /**
      * @inheritdoc
      */
@@ -33,6 +35,17 @@ class Subscribe extends \yii\db\ActiveRecord
           ['email', 'unique'],
         ];
     }
+
+  public function init(){
+    $this->on(self::EVENT_NOTIFICATION_ADMIN, [$this, 'notification']);
+  }
+
+  public function notification($event){
+    $model = User::find()->where(['roles' => 'admin'])->all();
+    foreach($model as $r){
+      Common::sendMail('Notification','New subscribe',$r['email']);
+    }
+  }
 
     /**
      * @inheritdoc
