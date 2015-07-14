@@ -6,6 +6,8 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
+\Yii::setAlias('theme_view', '@frontend/themes/advert/views');
+
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -39,6 +41,14 @@ return [
                 'charset' => 'UTF-8',
             ],
         ],
+
+      'view' => [
+        'theme' => [
+          'class' => 'frontend\themes\advert\Theme',
+          'basePath' => '@app/',
+          'baseUrl'  => '@web/',
+        ],
+      ],
 
         'common' => [
             'class' => 'frontend\components\Common',
