@@ -22,7 +22,7 @@ use yii\bootstrap\Nav;
  $this->beginBody();
 ?>
 
-<? if(Yii::$app->session->hasFlash('success')): ?>
+<?php if(Yii::$app->session->hasFlash('success')): ?>
 
     <?php
      $success = Yii::$app->session->getFlash('success');
@@ -34,12 +34,12 @@ use yii\bootstrap\Nav;
           'body' => $success
       ])
     ?>
-<?
+<?php
 endif;
 ?>
 
 <!-- Header Starts -->
-  <? echo $this->render("//common/head") ?>
+  <?php echo $this->render("//common/head") ?>
 <!-- #Header Starts -->
 
 <div class="inside-banner">
@@ -59,7 +59,7 @@ endif;
 
 
 
-        <? echo $this->render("//common/footer") ?>
+        <?php echo $this->render("//common/footer") ?>
 
 <?php
 $this->endBody();
@@ -69,7 +69,7 @@ $this->endBody();
 </body>
 </html>
 
-<?
+<?php
 $this->endPage();
 ?>
 
